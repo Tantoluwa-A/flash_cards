@@ -16,7 +16,7 @@ public class Main {
         int countAdd = 0;
         int sumOfLoadedCards = 0;
         while (!Objects.equals(response, "exit")) {
-            System.out.println("Input the action (add, remove, import, export, ask, exit): ");
+            System.out.println("Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats): ");
             response = scanner.nextLine();
             switch (response) {
                 case "add" -> {
@@ -106,6 +106,12 @@ public class Main {
                         }
                         count++;
                     }
+                }
+                case "log" -> {
+                    System.out.println("File name:");
+                    BufferedWriter writer = new BufferedWriter(new FileWriter(scanner.nextLine()));
+                    writer.write("hi");
+                    writer.close();
                 }
                 default -> {
                 }
