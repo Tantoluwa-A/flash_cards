@@ -109,9 +109,9 @@ public class Main {
                 }
                 case "log" -> {
                     System.out.println("File name:");
-                    BufferedWriter writer = new BufferedWriter(new FileWriter(scanner.nextLine()));
-                    writer.write("hi");
-                    writer.close();
+                    PrintStream console = new PrintStream(new File(scanner.nextLine()));
+                    System.setOut(console);
+                    console.print(OutputStream.nullOutputStream());
                 }
                 default -> {
                 }
