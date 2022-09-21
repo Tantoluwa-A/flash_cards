@@ -109,9 +109,13 @@ public class Main {
                 }
                 case "log" -> {
                     System.out.println("File name:");
-                    PrintStream console = new PrintStream(new File(scanner.nextLine()));
+                    PrintStream file = new PrintStream(new File(scanner.nextLine()));
+                    PrintStream console = System.out;
+                    System.setOut(file);
+                    file.print("hi");
+                    file.close();
                     System.setOut(console);
-                    console.print(OutputStream.nullOutputStream());
+                    console.println("This has been saved");
                 }
                 default -> {
                 }
