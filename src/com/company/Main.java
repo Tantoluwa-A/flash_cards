@@ -8,40 +8,52 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
         Map<String, String> cardsAndDefinitions = new LinkedHashMap<>();
-        String term = "";
-        String definition = "";
+        String term;
+        String definition;
         String key = "";
         String response = "";
+        String logs = "";
         int count = 0;
         int countAdd = 0;
         int sumOfLoadedCards = 0;
         while (!Objects.equals(response, "exit")) {
             System.out.println("Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats): ");
+            logs += "Input the action (add, remove, import, export, ask, exit, log, hardest card, reset stats): \n";
             response = scanner.nextLine();
+            logs += response + "\n";
             switch (response) {
                 case "add" -> {
                     System.out.println("The card:");
+                    logs += "The card:\n";
                     term = scanner.nextLine();
+                    logs += term + "\n";
                     if (cardsAndDefinitions.containsKey(term)) {
                         System.out.println("The card \"" + term + "\" already exists.");
+                        logs += "The card \"" + term + "\" already exists.\n";
                         System.out.println();
+                        logs += "\n";
                         continue;
                     }
                     System.out.println("The definition of the card:");
+                    logs += "The definition of the card:\n";
                     definition = scanner.nextLine();
+                    logs += definition + "\n";
                     if (cardsAndDefinitions.containsValue(definition)) {
                         System.out.println("The definition \"" + definition + "\" already exists.");
+                        logs += "The definition \"" + definition + "\" already exists.\n";
                     } else {
                         cardsAndDefinitions.put(term, definition);
                         countAdd++;
                         System.out.println("The pair (\"" + term + "\":\"" + definition + "\") has been added.");
+                        logs += "The pair (\"" + term + "\":\"" + definition + "\") has been added.\n";
                     }
                     System.out.println();
+                    logs += "\n";
                 }
                 case "remove" -> {
                     System.out.println("Which card?");
                     String cardToBeRemoved = scanner.nextLine();
-                    if (cardsAndDefinitions.containsKey(cardToBeRemoved)) {
+                    if(cardsAndDefinitions.containsKey(cardToBeRemoved)) {
                         cardsAndDefinitions.remove(cardToBeRemoved);
                         sumOfLoadedCards--;
                         System.out.println("The card has been removed.");
@@ -94,7 +106,7 @@ public class Main {
                         } else if (cardsAndDefinitions.containsValue(answer)) {
                             for (var answerEntry : cardsAndDefinitions.entrySet()) {
                                 if (answer.equals(answerEntry.getValue())) {
-                                    key = answerEntry.getKey();
+                                    key = answerEntry.getKey(); //This is not being used, why do you have it here?
                                     System.out.println("Wrong. The right answer is \"" +
                                             cardsAndDefinitions.get(entry)
                                             + "\", but your definition is correct for \"" + answerEntry.getKey() + "\".");
@@ -109,13 +121,17 @@ public class Main {
                 }
                 case "log" -> {
                     System.out.println("File name:");
-                    PrintStream file = new PrintStream(new File(scanner.nextLine()));
+                    logs += "File name:\n";
+                    String fileName = scanner.nextLine();
+                    logs += fileName + '\n';
+                    PrintStream file = new PrintStream(fileName);
                     PrintStream console = System.out;
                     System.setOut(file);
-                    file.print("hi");
+                    file.print(logs);
                     file.close();
                     System.setOut(console);
                     console.println("This has been saved");
+                    logs += "This has been saved";
                 }
                 default -> {
                 }
